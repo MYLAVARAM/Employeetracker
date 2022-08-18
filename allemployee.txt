@@ -1,0 +1,350 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using EmployeeProfile.Models;
+
+
+namespace EmployeeProfile.Controllers
+{
+    public class AddEmployeeController : Controller
+    {
+        public Employee_PortalEntities db = new Employee_PortalEntities();
+        public ActionResult Index()
+        {
+            List<AddEmployee> details = new List<AddEmployee>();
+
+            details = db.EmployeeDetails.Join(db.ClientMasters,
+                x => x.EmpId,
+                y => y.EmpId,
+                (x, y) => new
+                {
+                    x.EmpId,
+                    x.Firstname,
+                    x.Lastname,
+                    x.LancesoftID,
+                    x.Joiningdate,
+                    x.Active_Status,
+                    x.Salary,
+                    x.Dateofbirth,
+                    x.Department,
+                    x.Worklocation,
+                    x.Phoneno,
+                    x.ReportingManagerId,
+                    x.Vertical,
+                    x.SubDepartmentId,
+                    x.EmployeeTypeId,
+                    x.State,
+                    x.Country,
+                    x.City,
+                    x.Employee_Designation_FK,
+                    x.Street,
+                    x.Pincode,
+                    x.Address_status,
+                    x.Gender,
+                    x.Working_internal,
+                    x.Email,
+                    x.DepartmentId,
+                    x.Employee_Type1,
+                    x.Designation,
+                   
+                    
+             
+                    
+                    
+                    y.ClientName,
+
+
+                })
+                .Join(db.Bills, x => x.EmpId, z => z.EmpId, (x, z) => new
+                {
+                    x.EmpId,
+                    x.Firstname,
+                    x.Lastname,
+                    x.Email,
+                    x.DepartmentId,
+                    x.LancesoftID,
+                    x.Joiningdate,
+                    x.Active_Status,
+                    x.Salary,
+                    x.Dateofbirth,
+                    x.Department,
+                    x.Designation,
+                    x.Worklocation,
+                    x.Phoneno,
+                    x.ReportingManagerId,
+                    x.Vertical,
+                    x.Country,
+                    x.City,
+                    x.Employee_Designation_FK,
+                    x.SubDepartmentId,
+                    x.Street,
+                    x.Pincode,
+                    x.Address_status,
+                    x.Gender,
+                    x.Working_internal,
+                    x.EmployeeTypeId,
+                    x.ClientName,
+                    x.Employee_Type1,
+                    z.FoodCost,
+                    z.TotalExpenses,
+                    z.BenchTenure,
+                    z.TotalSalaryTillNow,
+                    z.CubicleCost,
+                    z.ProfitOrLoss,
+                    z.Amount,
+                    z.TransportationCost,
+                    
+
+
+                })
+                .Select(p => new AddEmployee
+                {
+                    ClientName = p.ClientName,
+                    BenchTenure = p.BenchTenure,
+                    FoodCost = p.FoodCost,
+                    TotalExpenses = p.TotalExpenses,
+                    TotalSalaryTillNow = p.TotalSalaryTillNow,
+                    Amount = p.Amount,
+                    ProfitOrLoss = p.ProfitOrLoss,
+                    CubicleCost = p.CubicleCost,
+                    TransportationCost = p.TransportationCost,
+                    City = p.City,
+                    Country = p.Country,
+                    Firstname=p.Firstname,
+                    Lastname = p.Lastname,
+                    EmpId = p.EmpId,
+                    Email=p.Email,
+                    DepartmentId=p.DepartmentId,
+                    EmployeeTypeId=p.EmployeeTypeId,
+                    Employee_Designation_FK = p.Employee_Designation_FK,
+                    SubDepartmentId=p.SubDepartmentId,
+                    LancesoftID=p.LancesoftID,
+                    Joiningdate=p.Joiningdate,
+                     Street = p.Street,
+                     Pincode= p.Pincode,
+                     Address_status= p.Address_status,
+                    GenderList=p.Gender,
+                    Working_internal=p.Working_internal,
+                    //Designation=p.Designation,
+                    Vertical = p.Vertical,
+                    ReportingManagerId = p.ReportingManagerId,
+                    Phoneno = p.Phoneno,
+                    Worklocation = p.Worklocation,
+                    Dateofbirth = p.Dateofbirth,
+                    Salary = p.Salary,
+
+                }).ToList();
+
+            //return View(db.Employee_details.ToList());
+            return View(details);
+        }
+            public ActionResult Details(int id, AddEmployee addEmployeeDetails)
+            {
+            addEmployeeDetails = db.EmployeeDetails.Join(db.ClientMasters,
+           x => x.EmpId,
+           y => y.EmpId,
+           (x, y) => new
+           {
+               x.EmpId,
+               x.Firstname,
+               x.Lastname,
+               x.LancesoftID,
+               x.Joiningdate,
+               x.Active_Status,
+               x.Salary,
+               x.Dateofbirth,
+               x.Department,
+               x.Worklocation,
+               x.Phoneno,
+               x.ReportingManagerId,
+               x.Vertical,
+               
+               x.Country,
+               x.City,
+               x.Designation,
+               y.ClientName,
+
+
+           })
+           .Join(db.Bills, x => x.EmpId, z => z.EmpId, (x, z) => new
+           {
+               x.EmpId,
+               x.Firstname,
+               x.Lastname,
+               x.LancesoftID,
+               x.Joiningdate,
+               x.Active_Status,
+               x.Salary,
+               x.Dateofbirth,
+               x.Department,
+               x.Worklocation,
+               x.Phoneno,
+               x.ReportingManagerId,
+               x.Vertical,
+               x.Country,
+               x.City,
+               x.Designation,
+               x.ClientName,
+               z.FoodCost,
+               z.TotalExpenses,
+               z.BenchTenure,
+               z.TotalSalaryTillNow,
+               z.CubicleCost,
+               z.ProfitOrLoss,
+               z.Amount,
+               z.TransportationCost
+
+
+
+           })
+           .Select(p => new AddEmployee
+           {
+               ClientName = p.ClientName,
+               BenchTenure = p.BenchTenure,
+               FoodCost = p.FoodCost,
+               TotalExpenses = p.TotalExpenses,
+               TotalSalaryTillNow = p.TotalSalaryTillNow,
+               Amount = p.Amount,
+               ProfitOrLoss = p.ProfitOrLoss,
+               CubicleCost = p.CubicleCost,
+               TransportationCost = p.TransportationCost,
+               City = p.City,
+               Country = p.Country,
+               EmpId=p.EmpId,
+
+               Vertical = p.Vertical,
+               ReportingManagerId = p.ReportingManagerId,
+               Phoneno = p.Phoneno,
+               Worklocation = p.Worklocation,
+               Dateofbirth = p.Dateofbirth,
+               Salary = p.Salary,
+
+           }).FirstOrDefault(x => x.EmpId == id);
+            
+
+            
+
+            return View(addEmployeeDetails);
+        }
+        public ActionResult Create()
+        {
+            ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentName");
+            ViewBag.Employee_Designation_FK = new SelectList(db.Designations, "DesignationId", "DesignationName");
+            ViewBag.EmployeeTypeId = new SelectList(db.Employee_Type, "EmployeeTypeid", "EmployeeType");
+            ViewBag.ReportingManagerId = new SelectList(db.Logins, "ID", "Name");
+            ViewBag.SubDepartmentId = new SelectList(db.SubDepartments, "SDepartmentId", "Name");
+            return View();
+        }
+
+        // POST: EmployeeDetails/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "EmpId,Firstname,Lastname,Email,Phoneno,Worklocation,Employee_Designation_FK,DepartmentId,SubDepartmentId,LancesoftID,EmployeeTypeId,ReportingManagerId,Country,State,City,Street,Pincode,Active_Status,CreatedDate,CreatedBy,Vertical,Gender,Address_status,Working_internal,Joiningdate,Dateofbirth,Salary")] AddEmployee addEmployeeDetails)
+        {
+            if (ModelState.IsValid)
+            {
+                EmployeeDetail obj = new EmployeeDetail();
+
+                obj.Firstname = addEmployeeDetails.Firstname;
+                obj.Lastname = addEmployeeDetails.Lastname;
+                obj.Email = addEmployeeDetails.Email;
+                obj.Salary = addEmployeeDetails.Salary;
+                obj.Phoneno = addEmployeeDetails.Phoneno;
+                obj.Worklocation = addEmployeeDetails.Worklocation;
+                obj.SubDepartmentId = addEmployeeDetails.SubDepartmentId;
+                obj.DepartmentId = addEmployeeDetails.DepartmentId;
+                obj.LancesoftID = addEmployeeDetails.LancesoftID;
+                obj.EmployeeTypeId = addEmployeeDetails.EmployeeTypeId;
+                obj.Joiningdate = addEmployeeDetails.Joiningdate;
+                obj.Dateofbirth = addEmployeeDetails.Dateofbirth;
+                obj.Salary = addEmployeeDetails.Salary;
+                obj.Working_internal = addEmployeeDetails.Working_internal;
+                db.EmployeeDetails.Add(obj);
+                db.SaveChanges();
+                ClientMaster obj1 = new ClientMaster();
+                obj1.ClientName = addEmployeeDetails.ClientName;
+
+                obj1.EmpId = obj.EmpId;
+                db.ClientMasters.Add(obj1);
+                db.SaveChanges();
+                Bill obj2 = new Bill();
+
+                obj2.CubicleCost = addEmployeeDetails.CubicleCost;
+                obj2.FoodCost = addEmployeeDetails.FoodCost;
+                obj2.TransportationCost = addEmployeeDetails.TransportationCost;
+                obj2.EmpId = obj.EmpId;
+                db.Bills.Add(obj2);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentName", addEmployeeDetails.DepartmentId);
+            ViewBag.Employee_Designation_FK = new SelectList(db.Designations, "DesignationId", "DesignationName", addEmployeeDetails.Employee_Designation_FK);
+            ViewBag.EmployeeTypeId = new SelectList(db.Employee_Type, "EmployeeTypeid", "EmployeeType", addEmployeeDetails.EmployeeTypeId);
+            ViewBag.ReportingManagerId = new SelectList(db.Logins, "ID", "Name", addEmployeeDetails.ReportingManagerId);
+            ViewBag.SubDepartmentId = new SelectList(db.SubDepartments, "SDepartmentId", "Name", addEmployeeDetails.SubDepartmentId);
+            return View(addEmployeeDetails);
+        }
+        // POST: Employee_details/Create
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create(AddEmployee addEmployeeDetails)
+        //{
+
+
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        EmployeeDetail obj = new EmployeeDetail();
+
+        //        obj.Firstname = addEmployeeDetails.Firstname;
+        //        obj.Lastname = addEmployeeDetails.Lastname;
+        //        obj.Email = addEmployeeDetails.Email;
+        //        obj.Salary = addEmployeeDetails.Salary;
+        //        obj.Phoneno = addEmployeeDetails.Phoneno;
+        //        obj.Worklocation = addEmployeeDetails.Worklocation;
+        //        obj.SubDepartmentId = addEmployeeDetails.SubDepartmentId;
+        //        obj.DepartmentId = addEmployeeDetails.DepartmentId;
+        //        obj.LancesoftID = addEmployeeDetails.LancesoftID;
+        //        obj.EmployeeTypeId = addEmployeeDetails.EmployeeTypeId;
+        //        obj.Joiningdate = addEmployeeDetails.Joiningdate;
+        //        obj.Dateofbirth = addEmployeeDetails.Dateofbirth;
+        //        obj.Salary = addEmployeeDetails.Salary;
+        //        obj.Working_internal = addEmployeeDetails.Working_internal;
+        //        db.EmployeeDetails.Add(obj);
+        //        db.SaveChanges();
+        //    ClientMaster obj1 = new ClientMaster();
+        //        obj1.ClientName = addEmployeeDetails.ClientName;
+                
+        //        obj1.EmpId = obj.EmpId;
+        //        db.ClientMasters.Add(obj1);
+        //        db.SaveChanges();
+        //        Bill obj2 = new Bill();
+
+        //        obj2.CubicleCost = addEmployeeDetails.CubicleCost;
+        //        obj2.FoodCost = addEmployeeDetails.FoodCost;
+        //        obj2.TransportationCost = addEmployeeDetails.TransportationCost;
+        //        obj2.EmpId = obj.EmpId;
+        //        db.Bills.Add(obj2);
+        //        db.SaveChanges();
+
+        //        return RedirectToAction("Index");
+
+        //    }
+           
+        
+
+        //    return View(addEmployeeDetails);
+
+        //}
+         
+   
+
+}
+}
